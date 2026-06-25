@@ -877,7 +877,12 @@
    <button class="memory-btn" onclick="openTextPopup()">
       💌 Open Message
    </button>
+
+   <button class="memory-btn" onclick="openImagePopup(0)">
+      🖼️ Open Photo
+   </button>
 </div>
+
 <!-- TEXT POPUP -->
 <div class="popup-overlay" id="textPopup">
    <div class="popup-window">
@@ -890,6 +895,26 @@
       </div>
    </div>
 </div>
+
+<!-- IMAGE POPUP -->
+<div class="popup-overlay" id="imagePopup">
+   <div class="popup-window">
+      <div class="popup-header">
+         <span>Photo Viewer</span>
+         <button class="close-btn" onclick="closePopup('imagePopup')">✕</button>
+      </div>
+
+      <div class="popup-content" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+         <button class="nav-btn" onclick="changeImage(-1)">❮</button>
+
+         <img id="popupImage" src="" alt="Memory Image" style="max-width:80%;border-radius:12px;">
+
+         <button class="nav-btn" onclick="changeImage(1)">❯</button>
+      </div>
+   </div>
+</div>
+
+
 
 <script>
 
@@ -949,6 +974,58 @@ function openTextPopup() {
    i = 0;
    typeWriter();
 }
+
+
+// =========================
+// IMAGE POPUP (GALLERY)
+// =========================
+
+const images = [
+   "photo1.jpg",
+   "photo2.jpg",
+   "photo3.jpg",
+   "photo4.jpg",
+   "photo5.jpg",
+   "photo6.jpg",
+   "photo7.jpg",
+   "photo8.jpg",
+   "photo9.jpg",
+   "photo10.jpg"
+];
+
+let currentIndex = 0;
+
+function openImagePopup(index) {
+   currentIndex = index;
+   document.getElementById("popupImage").src = images[currentIndex];
+   document.getElementById("imagePopup").style.display = "flex";
+}
+
+function changeImage(step) {
+   currentIndex += step;
+
+   if (currentIndex < 0) currentIndex = images.length - 1;
+   if (currentIndex >= images.length) currentIndex = 0;
+
+   document.getElementById("popupImage").src = images[currentIndex];
+}
+
+
+// =========================
+// CLOSE POPUPS
+// =========================
+
+function closePopup(id) {
+   document.getElementById(id).style.display = "none";
+}
+
+// click outside to close
+window.addEventListener("click", function (e) {
+   document.querySelectorAll(".popup-overlay").forEach(popup => {
+      if (e.target === popup) popup.style.display = "none";
+   });
+});
+
 </script>
   <!-- FOOTER -->
   <footer>
