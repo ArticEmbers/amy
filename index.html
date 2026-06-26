@@ -343,12 +343,13 @@
 
     /* FIX 2: hero name — increased line-height + padding-bottom to prevent descender clipping */
     .hero-name {
+      display: inline-block;
       font-family: 'Playfair Display', serif;
       font-size: clamp(5rem, 18vw, 13rem);
       font-weight: 900;
       font-style: italic;
       line-height: 1.15;
-      padding-bottom: 0.12em;
+      padding: 0.02em 0.05em 0.15em 0.08em;
       background: linear-gradient(160deg, #ffffff 0%, #e8d5ff 20%, #c084fc 45%, #e63946 70%, #f9c74f 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -380,7 +381,7 @@
       font-size: clamp(0.95rem, 2vw, 1.2rem);
       color: var(--text-muted);
       font-weight: 300;
-      max-width: 460px;
+      max-width: 570px;
       line-height: 1.8;
       opacity: 0;
       animation: fadeInUp 1s ease 1.1s forwards;
@@ -1012,6 +1013,58 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: duration: 0.01ms !important; }
     }
+
+.popup-content {
+  padding: 1.8rem;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-purple) rgba(20,20,46,0.45);
+}
+
+/* Chrome / Edge / Safari */
+.popup-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.popup-content::-webkit-scrollbar-track {
+  background: rgba(20,20,46,0.45);
+  border-radius: 999px;
+  border: 1px solid rgba(192,132,252,0.08);
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--accent-red),
+    var(--accent-purple),
+    var(--accent-gold)
+  );
+  border-radius: 999px;
+  border: 2px solid rgba(20,20,46,0.9);
+  box-shadow:
+    0 0 12px rgba(192,132,252,.35),
+    inset 0 0 5px rgba(255,255,255,.15);
+}
+
+.popup-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ff5d6c,
+    #d8a6ff,
+    #ffd66a
+  );
+
+  box-shadow:
+    0 0 18px rgba(192,132,252,.55),
+    inset 0 0 6px rgba(255,255,255,.2);
+}
+
+.popup-content::-webkit-scrollbar-corner {
+  background: transparent;
+}
   </style>
 </head>
 <body>
@@ -1172,7 +1225,7 @@
       <div class="memory-card reveal">
         <p class="memory-date">February 2025</p>
         <h3 class="memory-card-title">First time meeting</h3>
-        <p class="memory-text">February 2025, our first hello. Neither of us knew then how many memories would follow. On your birthday, I hope you look back on this year with a smile and look ahead knowing the best moments are still to come.</p>
+        <p class="memory-text">February 2025, our first hello. <br /> Neither of us knew then how many memories would follow. On your birthday, <br />I hope you look back on this year with a smile and look ahead knowing the best moments are still to come.</p>
         <div class="memory-tags">
           <span class="tag red">✦ 2025</span>
           <span class="tag gold">February 2025</span>
@@ -1183,7 +1236,7 @@
       <div class="memory-card reveal">
         <p class="memory-date">25 March 2025</p>
         <h3 class="memory-card-title">First time seeing one of your body parts</h3>
-        <p class="memory-text">25 March 2025, the first time seeing ur little feeties (and gooning at them but that's another thing to ignore, ahem:3)</p>
+        <p class="memory-text">25 March 2025, the first time seeing ur little feeties <br /> (And gooning at them but that's another thing to ignore, ahem:3)</p>
         <div class="memory-tags">
           <span class="tag rose">✦ 2025</span>
           <span class="tag purple">March 2025</span>
@@ -1194,7 +1247,7 @@
       <div class="memory-card reveal">
         <p class="memory-date">28th June 2025</p>
         <h3 class="memory-card-title">Started to date eachothers and get even more close</h3>
-        <p class="memory-text">August 2025, when a friendship became a relationship, and ordinary days started feeling a little more special. It's a memory I'll always look back on with a smile, grateful for everything we shared and everything it taught me.</p>
+        <p class="memory-text">August 2025, when a friendship became a relationship, and ordinary days started feeling a little more special. <br /> It's a memory I'll always look back on with a smile, grateful for everything we shared and everything it taught me.</p>
         <div class="memory-tags">
           <span class="tag gold">✦ 2025</span>
           <span class="tag rose">June 2025</span>
@@ -1205,7 +1258,7 @@
       <div class="memory-card reveal">
         <p class="memory-date">14 November 2026</p>
         <h3 class="memory-card-title">This very moment</h3>
-        <p class="memory-text">Right now, today, the birthday you're celebrating as you read these words. Write what this day means, what you hope for, and what you want to remember forever.</p>
+        <p class="memory-text">Right now, today, the birthday you're celebrating as you read these words. <br />Write what this day means, what you hope for, and what you want to remember forever.</p>
         <div class="memory-tags">
           <span class="tag white">✦ 2026</span>
           <span class="tag purple">November 2026</span>
@@ -1215,49 +1268,60 @@
     </div>
   </section>
 
-  <!-- BUTTONS -->
-  <div class="extra-buttons">
-    <button class="memory-btn" onclick="openTextPopup()">
-      <span>💌 Open Message</span>
-    </button>
-    <button class="memory-btn" onclick="openImagePopup(0)">
-      <span>🖼️ Open Photo</span>
-    </button>
-  </div>
+<!-- BUTTONS -->
+<div class="extra-buttons">
+  <button class="memory-btn" onclick="openTextPopup()">
+    <span>💌 Open Message</span>
+  </button>
 
-  <!-- TEXT POPUP -->
-  <div class="popup-overlay" id="textPopup">
-    <div class="popup-window">
-      <div class="popup-header">
-        <div class="popup-header-left">
-          <div class="popup-header-dot"></div>
-          <span>Message.exe</span>
-        </div>
-        <button class="close-btn" onclick="closePopup('textPopup')">✕</button>
-      </div>
-      <div class="popup-content">
-        <p id="typedText"></p>
-      </div>
-    </div>
-  </div>
+  <button class="memory-btn" onclick="openImagePopup(0)">
+    <span>🖼️ Open Photo</span>
+  </button>
+</div>
 
-  <!-- IMAGE POPUP -->
-  <div class="popup-overlay" id="imagePopup">
-    <div class="popup-window">
-      <div class="popup-header">
-        <div class="popup-header-left">
-          <div class="popup-header-dot" style="background:var(--accent-purple);box-shadow:0 0 8px var(--accent-purple)"></div>
-          <span>Photo Viewer</span>
-        </div>
-        <button class="close-btn" onclick="closePopup('imagePopup')">✕</button>
+<!-- TEXT POPUP -->
+<div class="popup-overlay" id="textPopup">
+  <div class="popup-window">
+
+    <div class="popup-header">
+      <div class="popup-header-left">
+        <div class="popup-header-dot"></div>
+        <span>Message.exe</span>
       </div>
-      <div class="image-popup-content">
-        <button class="nav-btn" onclick="changeImage(-1)">❮</button>
-        <img id="popupImage" src="" alt="Memory Image" />
-        <button class="nav-btn" onclick="changeImage(1)">❯</button>
-      </div>
+
+      <button class="close-btn" onclick="closePopup('textPopup')">✕</button>
     </div>
+
+    <div class="popup-content" id="textPopupContent">
+      <div id="typedText"></div>
+    </div>
+
   </div>
+</div>
+
+<!-- IMAGE POPUP -->
+<div class="popup-overlay" id="imagePopup">
+  <div class="popup-window">
+
+    <div class="popup-header">
+      <div class="popup-header-left">
+        <div class="popup-header-dot" style="background:var(--accent-purple);box-shadow:0 0 8px var(--accent-purple)"></div>
+        <span>Photo Viewer</span>
+      </div>
+
+      <button class="close-btn" onclick="closePopup('imagePopup')">✕</button>
+    </div>
+
+    <div class="image-popup-content">
+      <button class="nav-btn" onclick="changeImage(-1)">❮</button>
+
+      <img id="popupImage" src="" alt="Memory Image">
+
+      <button class="nav-btn" onclick="changeImage(1)">❯</button>
+    </div>
+
+  </div>
+</div>
 
   <!-- FOOTER -->
   <footer>
@@ -1529,44 +1593,44 @@ function initReveal() {
    TEXT POPUP — PASTE YOUR MESSAGE BELOW
 ════════════════════════════════════ */
 // ↓↓↓ REPLACE THIS STRING WITH YOUR OWN MESSAGE ↓↓↓
-const message = `[ I wish you a happy birthday, Amyyyyyyyy!💖
+const message = `I wish you a happy birthday, Amyyyyyyyy!💖
 
 
-Today is your birthday, 14th november 2026 and also making you 13 hehehe(6 more till I can legally breed u muhehehehe;])
+Today is your birthday, 14th november 2026 and also making you 13 hehehe(3 more until I can legally have sex wid u (As consent ager is 16+ :>), and 5 more until I can legally breed u muhehehehe;])
 
-(I know I asked it again but I was either on february or March so I rathered to ask before saying something wrong to u sowwwy)
+(I know I asked it again but I was either on february or March so I rathered to ask before saying something wrong to u sowwy)
 
 I remember pretty much everything, from february 2025, when we first met to now, I remember every little thing we done together, playing, trolling around, sharing memories and more
 
-I also remember some importants day to my eyes between us like in february when we first met on rival via dark, or also june where I finally had the courage to actually tell you I wanted to date you (and breed you one day muhehe, anyways), or also the 18th ‎september ‎2025 where you had finally trusted me enough to show me ur pussy<3 (which i milked a lot but that's another add-on)
+I also remember some importants day to my eyes between us like in february when we first met on rival via dark, or also june where I finally had the courage to actually tell you I wanted to date you (and breed you one day muhehe, anyways), or also in ‎september ‎2025, the month where you finally trusted me enough to show me ur pussy<3 (which i milked a lot at it, enough to make u probably pregnant at least 5 or 6x, but that's another add-on)
 
-I know we keep arguing about random stuff a lot, mostly this year (Mostly due to Vaelie and me), I'm sorry about it but just know that to my eyes you'll always be and be staying my mommy that I gooned so much i probably wasted some millions of sperm for ur beauty
+I know we keep arguing about random stuff a lot, mostly this year (Mostly due to Vaelie and me), I'm sorry about it but just know that to my eyes you'll always be and be staying my mommy that I gooned so much i probably wasted some millions of life sources for ur beauty (And I'll still do, one day inside of u >;3)
 
 Also quit trash talking about yourself, about being hairy, fat, having a bad hair, looking ugly on pictures, I've already told u many time, hairy or shaved, fat or thin, having a bad hair or good hair, looking ugly on pictures or correct you still be Amy, or my mommy, which makes me like it a lot<3
 
 I also thank you for trusting me enough this year to share more of your body hehe, I dont do it everytime but I do thank you for every pictures u give me of yourself whatever is it, face, feet, pussy, boobies, legs or anything pretty much, just know I've gooned at all of them (or at least over 90% of them) because of how much I love you and I love how you look
 
-I also keep saying I'll eat you, that I'll breed you or fuck you or bother you around gooning asking you to make yourself less tights, I know I may be bothering on that but I really ask it for a reason, I dont want to hurt you or make u bleed if I really do what i say to you (Fingering your pussy, fingering your asshole, fucking ur pussy, Fucking your asshole, I just want u to enjoy it without suffering because doing is it to be pleasured, the both of us.
+I also keep saying I'll eat you, that I'll breed you or fuck you or bother you around gooning asking you to make yourself less tights, I know I may be bothering on that but I really ask it for a reason, I dont want to hurt you or make u bleed if I really do what i say to you (Fingering your pussy, fingering your asshole, fucking ur pussy, Fucking your asshole, I just want u to enjoy it without suffering because doing it is normally to be feeling pleasure, for the both of us.
 
-I also know I'm always asking you for pussy or boobies pictures, a lot, but I'll be honest with you, I do look porn online, a lot, that is hentai or real porn I dont really mind it to me both is equal but, I do promise you one thing, your pussy and breast, they're the only actual sexual bodypart pictures I loved a lot, why you may ask? Because as you're shy and stressed your pictures are not "perfect" as how people would call them, which also makes them have a charm and cute appearance<3
+I also know I'm always asking you for pussy or boobies pictures, a lot, but I'll be honest with you, I do look porn online, a lot, that is hentai or real porn I dont really mind it to me both is equal but, I do promise you one thing, your pussy and breast, they're the only actual sexual bodypart pictures I loved a lot, why you may ask? Because as you're shy and stressed your pictures are not "perfect" as how people would call them, which also makes them have a charm and cute appearance  (Hairy or not I'll devour that little pussy of yours, same for your boobies or toes, ahem) <3
 
 I'm sorry for being a dumbass sometime or acting cold, I dont mean to most of the times by the way
 
 I also sometime troll around to hard making you do stuffs I actually was joking around (As example of the 2 pussy pictures you gave me for the discord nitro which I was just trolling around and wanted to gift you), I'm sorry for it and I do promise I'll try to find ways to refund you on these :3
 
-And also you keep saying "I dont know what to give" "I dont know how to repay you/refund you" but just know that every gift I do to you are gifts I want to do, and if I have to be honest (I'll never sell them but its just for an example), if I make a zip folder of EVERY pictures I've got so far from you (Face, feet, full body, pussy, boobies) it might be Worth above 500 or 600 euros (The 2 pussy picture i told earlier, some people would just sell one for like 40 or 50 euros), know it that everytime I'm saying "I'll let my friends jerk off at you", "I'll leak your pussy" or stuffs like that I dont mean it out of a troll, I'm the only one who has ever seen these pictures (out of one feet pic that I cannot lie onett did see but he doesnt know about its you or wtv (I'm sorry for that its just I wanted to give him a file while streaming and for whatever reason discord opened the downloads folder which had your feet pic (They were not bare, know it)))
+And also you keep saying "I dont know what to give" "I dont know how to repay you/refund you" but just know that every gift I do to you are gifts I want to do, and if I have to be honest (I'll never sell them but its just for an example), if I make a zip folder of EVERY pictures I've got so far from you (Face, feet, full body, pussy, boobies) it might be Worth above 500 or 600 euros (The 2 pussy picture i told earlier, some people would just sell one for like 40 or 50 euros), know it that everytime I'm saying "I'll let my friends jerk off at you", "I'll leak your pussy" or stuffs like that I dont mean it out of a troll, I'm the only one who has ever seen these pictures (out of one feet pic that I cannot lie onett did see but he doesnt know about its you or wtv (I'm sorry for that its just I wanted to give him a file while streaming and for whatever reason discord opened the downloads folder which had your feet pic (They were not bare, know it, he saw it for not even 3s and didnt have time to screenshot eitherway, all he did is blame me for having it saved saying shits about me xd))), and I'll also not delete the folder ever cus I'll be gooing at them daily even in some years probably hehehe;>
 
 But I'm still willing to do what I've said, if one day u ever feel so horny u just straight up want a dick pic from me to jerk off, say it and you'll get one (If you ever decide to goon, and to goon at me ig), me I dont feel like asking you (out of maybe feet/face pics to goon because I love your cute little face and feeties)
 
 But yeah that's pretty much everything I had to say, I hope you'll have a great and happy birthday and that you'll have a great gooning session with me one day (When I ask you to goon on cam I'm deadass willig to jerk off with you btw)
 
-I love you so much Amyyyyyyyyyy (enough to fill your little cutie pussy of warm cum and make a little us <3) and again, Happy birthdayyyyyyyyyy
+I love you so much Amyyyyyyyyyy (enough to fill your little and cute pussy of warm cum and make a little us (That you want it or not muhehehe) <3) and again, Happy birthdayyyyyyyyyy and hope u have a wonderful day with ur gooner and face, feet, pussy and breast cumtributer ;33 (Cumtributing means to be cumming on ur pictures if u wonder (Not at, litteraly on, so on the screen))
 
-Hope you'll enjoy the stuffs I made for you, this message and your gifts ;3 ]`;
+Hope you'll enjoy the stuffs I made for you, this message and your gifts (Hope u get offered a dildo so I can breed u easily muhehehe, anyways maybe one day I'll fr deliver u one, ahem) ;3`;
 // ↑↑↑ ↑↑↑ ↑↑↑
 
 let i = 0;
-const speed = 22;
+const speed = 12;
 let typingTimer;
 
 function typeWriter() {
@@ -1629,6 +1693,10 @@ window.addEventListener('click', e => {
 window.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.querySelectorAll('.popup-overlay').forEach(p => p.style.display = 'none');
 });
+
+
+const popup = document.getElementById("textPopupContent");
+popup.scrollTop = popup.scrollHeight;
 </script>
 </body>
 </html>
